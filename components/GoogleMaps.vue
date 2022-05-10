@@ -1,28 +1,34 @@
 <template>
-  <GoogleMap
-      api-key="YOUR_GOOGLE_MAPS_API_KEY"
-      style="width: 100%; height: 500px"
-      :center="center"
-      :zoom="15"
-  >
-    <Marker :options="{ position: center }" />
-  </GoogleMap>
+  <div id='map'></div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from "@vue/runtime-core";
-import { GoogleMap, Marker } from 'vue3-google-map'
+import {defineComponent, onMounted} from "@vue/runtime-core";
+import mapboxgl from "mapbox-gl";
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGVuaXMyNTAzIiwiYSI6ImNsMnlzNWp2YTB4cnQzbGs0ZjQ4dXg2MGIifQ.kSlUTa5dNY4DSNLDTKsdyA';
 
 export default defineComponent({
-  components: { GoogleMap, Marker },
   setup() {
-    const center = { lat: 40.689247, lng: -74.044502 }
+    onMounted(async ()=>{
+      await new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v10',
+        center: [-96, 37.8],
+        zoom: 3
+      });
+    })
 
-    return { center }
   },
 })
 </script>
 
 <style scoped>
-
+  #map {
+    display: flex;
+    top: 0;
+    bottom: 0;
+    width: 500px;
+    height: 500px;
+  }
 </style>
