@@ -47,7 +47,7 @@ export default defineComponent({
         const el = document.createElement('div');
         el.id = 'marker';
 
-        return new mapboxgl.Marker()
+        return new mapboxgl.Marker(el)
             .setLngLat([131.9034467, 43.1027089])
             .setPopup(popup)
             .addTo(map);
@@ -65,12 +65,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
-  #map {
-    display: flex;
-    top: 0;
-    bottom: 0;
-    width: 500px;
-    height: 500px;
-    border-radius: 8px;
-  }
+body { margin: 0; padding: 0; }
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+}
 </style>
