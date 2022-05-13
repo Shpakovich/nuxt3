@@ -27,24 +27,37 @@ export default defineComponent({
             },
             trackUserLocation: false
           });
+      /*const geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+        zoom: 13,
+        placeholder: 'Enter an address or place name',
+        bbox: [-105.116, 39.679, -104.898, 39.837]
+      });*/
+
       map.addControl(geoLocate);
       map.on('load', () => {
         geoLocate.trigger();
+        // map.addControl(geocoder, 'top-left');
       });
 
-      const marker1 = new mapboxgl.Marker()
-          .setLngLat([37.587874, 55.73367])
-          .addTo(map);
+      addPopUp();
+      function addPopUp() {
+        const popup = featurePopup();
+        const el = document.createElement('div');
+        el.id = 'marker';
 
-      /*const geocoder = new MapboxGeocoder({
-        // Initialize the geocoder
-        accessToken: mapboxgl.accessToken, // Set the access token
-        mapboxgl: mapboxgl, // Set the mapbox-gl instance
-        zoom: 13, // Set the zoom level for geocoding results
-        placeholder: 'Enter an address or place name', // This placeholder text will display in the search bar
-        bbox: [-105.116, 39.679, -104.898, 39.837] // Set a bounding box
-      });
-      map.addControl(geocoder, 'top-left');*/
+        return new mapboxgl.Marker()
+            .setLngLat([131.9034467, 43.1027089])
+            .setPopup(popup)
+            .addTo(map);
+      }
+      function featurePopup() {
+        return new mapboxgl.Popup({offset: 25}).setText(
+            'Construction on the Washington Monument began in 1848.'
+        )
+      }
+
     })
 
   },
